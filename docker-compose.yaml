@@ -5,7 +5,7 @@ services:
   url-shortener:
     build:
       context: .
-      dockerfile: deployments/Dockerfile
+      dockerfile: ./Dockerfile
     environment:
       - DB_HOST=db
       - DB_PORT=5432
@@ -14,7 +14,7 @@ services:
       - DB_NAME=url_shortener
       - APP_PORT=8000
     ports:
-      - "8080:8080"
+      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy

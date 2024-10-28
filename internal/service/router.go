@@ -15,7 +15,8 @@ func (s *service) router() chi.Router {
 		ape.CtxMiddleware(handlers.CtxLog(s.log)),
 	)
 	r.Route("/integrations/url-shortener-svc", func(r chi.Router) {
-
+		r.Get("/{alias}", s.handlers.RedirectHandler)
+		r.Post("/shorten", s.handlers.ShortenHandler)
 	})
 
 	return r

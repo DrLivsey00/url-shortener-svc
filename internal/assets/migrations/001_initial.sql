@@ -1,8 +1,9 @@
 -- +migrate Up
 create table links
     {
-        long text not null,
-        short text not null
+        id integer primary key,
+        alias text not null unique,
+        url text not null
     }
-create index link_index on links (long);
+create index link_index on links (alias);
 -- +migrate Down

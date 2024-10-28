@@ -3,8 +3,8 @@ package db
 import "github.com/DrLivsey00/url-shortener-svc/internal/config"
 
 type LinkService interface {
-	AddToDb(longUrl, shortUrl string) error
-	GetLongUrl(shortURL string) (string, error)
+	AddToDb(longUrl, alias string) error
+	GetLongUrl(alias string) (string, error)
 	GetShortUrl(longUrl string) (string, error)
 }
 

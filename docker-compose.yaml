@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-
   url-shortener:
     build:
       context: .
@@ -18,8 +17,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
-
   db:
     image: postgres:14
     environment:
@@ -35,8 +32,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  # Nginx
   nginx:
     image: nginx:latest
     volumes:

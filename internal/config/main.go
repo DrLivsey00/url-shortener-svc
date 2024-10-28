@@ -35,12 +35,13 @@ func New(getter kv.Getter) Config {
 }
 
 func (c *config) GetDBURL() string {
-	dbUrl, err := c.getter.GetStringMap("db_url")
+	dbConfig, err := c.getter.GetStringMap("db")
 	if err != nil {
 		panic(err)
 	}
-	if dbUrl == nil || dbUrl["db_url"] == nil {
-		panic("db_url not found in configuration")
+	url, ok := dbConfig["url"].(string)
+	if !ok || url == "" {
+		panic("db_url not found or is not a string in configuration")
 	}
-	return dbUrl["db_url"].(string)
+	return url
 }

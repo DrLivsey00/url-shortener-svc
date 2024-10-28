@@ -1,13 +1,14 @@
 package service
 
 import (
+	"errors"
 	db2 "github.com/DrLivsey00/url-shortener-svc/internal/service/db"
 	"math/rand"
 	"time"
 )
 
 type LinkSrv struct {
-	db2.Repository
+	repo db2.Repository
 }
 
 func NewLinkService(repo db2.Repository) *LinkSrv {
@@ -31,6 +32,26 @@ func (s *LinkSrv) Shorten(url string) (string, error) {
 	return string(b), nil
 }
 
-func (s *LinkSrv) Unshorten(url string) (string, error) {
-	return "", nil
+func (s *LinkSrv) GetShortUrl(longUrl string) (string, error) {
+	alias, err := s.repo.GetShortUrl(longUrl)
+	if err != nil {
+		return "", errors.New("error getting shortened url")
+	}
+	return alias, nil
+}
+
+func (s *LinkSrv) GetLongUrl(alias string) (string, error) {
+	longURL, err := s.repo.GetLongUrl(alias)
+	if err != nil {
+		return "", errors.New("error getting original url")
+	}
+	return longURL, nil
+}
+
+func (s *LinkSrv) Save(alias, longUrl string) error {
+	err := s.repo.AddToDb(alias, longUrl)
+	if err != nil {
+		return errors.New("error saving url")
+	}
+	return nil
 }

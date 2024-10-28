@@ -3,8 +3,10 @@ package service
 import db2 "github.com/DrLivsey00/url-shortener-svc/internal/service/db"
 
 type LinkService interface {
-	Shorten(url string) (string, error)
-	Unshorten(url string) (string, error)
+	Shorten(longUrl string) (string, error)
+	GetLongUrl(alias string) (string, error)
+	GetShortUrl(longUrl string) (string, error)
+	Save(alias, longUrl string) error
 }
 
 type Service struct {

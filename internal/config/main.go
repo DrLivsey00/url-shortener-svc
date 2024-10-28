@@ -13,6 +13,7 @@ type Config interface {
 	pgdb.Databaser
 	types.Copuser
 	comfig.Listenerer
+	GetDBURL() string
 }
 
 type config struct {
@@ -31,4 +32,15 @@ func New(getter kv.Getter) Config {
 		Listenerer: comfig.NewListenerer(getter),
 		Logger:     comfig.NewLogger(getter, comfig.LoggerOpts{}),
 	}
+}
+
+func (c *config) GetDBURL() string {
+	dbUrl, err := c.getter.GetStringMap("db_url")
+	if err != nil {
+		panic(err)
+	}
+	if dbUrl == nil || dbUrl["db_url"] == nil {
+		panic("db_url not found in configuration")
+	}
+	return dbUrl["db_url"].(string)
 }

@@ -1,7 +1,5 @@
 package db
 
-import "github.com/DrLivsey00/url-shortener-svc/internal/config"
-
 type LinkService interface {
 	AddToDb(longUrl, alias string) error
 	GetLongUrl(alias string) (string, error)
@@ -12,8 +10,8 @@ type Repository struct {
 	LinkService
 }
 
-func NewRepo(cfg config.Config) *Repository {
+func NewRepo(db *Db) *Repository {
 	return &Repository{
-		LinkService: NewLinkSrv(cfg.DB()),
+		LinkService: NewLinkSrv(db.DB),
 	}
 }

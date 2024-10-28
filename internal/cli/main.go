@@ -20,7 +20,8 @@ func Run(args []string) bool {
 	}()
 
 	cfg := config.New(kv.MustFromEnv())
-	repo := db2.NewRepo(cfg)
+	db := db2.NewDBConn(cfg)
+	repo := db2.NewRepo(db)
 	srv := service2.NewService(repo)
 
 	log = cfg.Log()

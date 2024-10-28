@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/DrLivsey00/url-shortener-svc/internal/config"
 	"github.com/DrLivsey00/url-shortener-svc/internal/service"
+	db2 "github.com/DrLivsey00/url-shortener-svc/internal/service/db"
 	"github.com/alecthomas/kingpin"
 	"gitlab.com/distributed_lab/kit/kv"
 	"gitlab.com/distributed_lab/logan/v3"
@@ -18,6 +19,8 @@ func Run(args []string) bool {
 	}()
 
 	cfg := config.New(kv.MustFromEnv())
+	repo := db2.NewRepo(cfg)
+
 	log = cfg.Log()
 
 	app := kingpin.New("url-shortener-svc", "")

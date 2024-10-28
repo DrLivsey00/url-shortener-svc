@@ -4,6 +4,7 @@ import (
 	"github.com/DrLivsey00/url-shortener-svc/internal/config"
 	"github.com/DrLivsey00/url-shortener-svc/internal/service"
 	db2 "github.com/DrLivsey00/url-shortener-svc/internal/service/db"
+	service2 "github.com/DrLivsey00/url-shortener-svc/internal/service/service"
 	"github.com/alecthomas/kingpin"
 	"gitlab.com/distributed_lab/kit/kv"
 	"gitlab.com/distributed_lab/logan/v3"
@@ -20,6 +21,7 @@ func Run(args []string) bool {
 
 	cfg := config.New(kv.MustFromEnv())
 	repo := db2.NewRepo(cfg)
+	srv := service2.NewService(repo)
 
 	log = cfg.Log()
 
@@ -42,7 +44,7 @@ func Run(args []string) bool {
 
 	switch cmd {
 	case serviceCmd.FullCommand():
-		service.Run(cfg)
+		service.Run(srv, cfg)
 	case migrateUpCmd.FullCommand():
 		err = MigrateUp(cfg)
 	case migrateDownCmd.FullCommand():

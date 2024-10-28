@@ -8,10 +8,10 @@ import (
 )
 
 type LinkSrv struct {
-	repo db2.Repository
+	repo *db2.Repository
 }
 
-func NewLinkService(repo db2.Repository) *LinkSrv {
+func NewLinkService(repo *db2.Repository) *LinkSrv {
 	return &LinkSrv{
 		repo,
 	}

@@ -1,6 +1,8 @@
 package service
 
 import (
+	"github.com/DrLivsey00/url-shortener-svc/internal/service/handlers"
+	service2 "github.com/DrLivsey00/url-shortener-svc/internal/service/service"
 	"net"
 	"net/http"
 
@@ -14,6 +16,7 @@ type service struct {
 	log      *logan.Entry
 	copus    types.Copus
 	listener net.Listener
+	handlers *handlers.Handlers
 }
 
 func (s *service) run() error {
@@ -27,16 +30,17 @@ func (s *service) run() error {
 	return http.Serve(s.listener, r)
 }
 
-func newService(cfg config.Config) *service {
+func newService(srv *service2.Service, cfg config.Config) *service {
 	return &service{
 		log:      cfg.Log(),
 		copus:    cfg.Copus(),
 		listener: cfg.Listener(),
+		handlers: handlers.NewHandlers(srv, cfg),
 	}
 }
 
-func Run(cfg config.Config) {
-	if err := newService(cfg).run(); err != nil {
+func Run(srv *service2.Service, cfg config.Config) {
+	if err := newService(srv, cfg).run(); err != nil {
 		panic(err)
 	}
 }

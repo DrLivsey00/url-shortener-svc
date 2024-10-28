@@ -13,7 +13,7 @@ type Service struct {
 	LinkService
 }
 
-func NewService(repo db2.Repository) *Service {
+func NewService(repo *db2.Repository) *Service {
 	return &Service{
 		LinkService: NewLinkService(repo),
 	}

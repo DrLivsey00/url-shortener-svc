@@ -26,10 +26,13 @@ func (h *Handlers) ShortenHandler(w http.ResponseWriter, r *http.Request) {
 	url, err := requests.ParseUrl(r)
 	if err != nil {
 		ape.RenderErr(w, problems.BadRequest(err)...)
+		return
 	}
 	alias, err := h.srv.Shorten(url)
 	if err != nil {
 		ape.RenderErr(w, problems.InternalError())
+
+		return
 	}
 	err = h.srv.Save(alias, url)
 	if err != nil {
@@ -37,16 +40,19 @@ func (h *Handlers) ShortenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ape.Render(w, resources.LinkResponse{Url: alias})
+
 }
 
 func (h *Handlers) RedirectHandler(w http.ResponseWriter, r *http.Request) {
 	alias, err := requests.ParseAlias(r)
 	if err != nil {
 		ape.RenderErr(w, problems.BadRequest(err)...)
+		return
 	}
 	url, err := h.srv.GetLongUrl(alias)
 	if err != nil {
 		ape.RenderErr(w, problems.InternalError())
+		return
 	}
 	http.Redirect(w, r, url, http.StatusMovedPermanently)
 }

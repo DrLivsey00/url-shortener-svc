@@ -34,7 +34,7 @@ services:
     volumes:
       - ./nginx.conf:/usr/local/bin/config/nginx.conf
     ports:
-      - "80:80"
+      - "8000:80"
     depends_on:
       - url-shortener
 

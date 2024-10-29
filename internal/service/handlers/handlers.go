@@ -42,8 +42,9 @@ func (h *Handlers) ShortenHandler(w http.ResponseWriter, r *http.Request) {
 		h.cfg.Log().Error(err)
 		return
 	}
+	url = "http://localhost:8000/integrations/url-shortener-svc/" + alias
 
-	ape.Render(w, resources.LinkResponse{Url: alias})
+	ape.Render(w, resources.LinkResponse{Url: url})
 
 }
 

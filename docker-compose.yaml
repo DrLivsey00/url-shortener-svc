@@ -6,12 +6,6 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=url_shortener
-      - APP_PORT=8000
       - KV_VIPER_FILE=./config/config.yaml
     ports:
       - "8000:8000"

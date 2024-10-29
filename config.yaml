@@ -3,7 +3,7 @@ log:
   disable_sentry: true
 
 db:
-  url:  "postgres://postgres:postgres@db:5432/url_shortener"
+  url:  "postgres://postgres:postgres@db:5432/url_shortener?sslmode=disable"
 
 listener:
   addr: :8000

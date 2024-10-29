@@ -12,6 +12,9 @@ RUN GOOS=linux go build  -o /usr/local/bin/url-shortener-svc /go/src/github.com/
 FROM alpine:3.9
 
 COPY --from=buildbase /usr/local/bin/url-shortener-svc /usr/local/bin/url-shortener-svc
+COPY config.yaml /usr/local/bin/config/config.yaml
+COPY nginx.conf /usr/local/bin/config/nginx.conf
 RUN apk add --no-cache ca-certificates
 
-ENTRYPOINT ["url-shortener-svc"]
+ENTRYPOINT ["/usr/local/bin/url-shortener-svc", "run", "service"]
+

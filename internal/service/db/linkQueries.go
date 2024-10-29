@@ -19,14 +19,14 @@ func NewLinkSrv(db *pgdb.DB, logger comfig.Logger) *LinkSrv {
 
 func (l *LinkSrv) AddToDb(longUrl, alias string) error {
 	err := l.Exec(sq.Insert("links").
-		Columns("long", "alias").
+		Columns("url", "alias").
 		Values(longUrl, alias))
 	l.Log().Error(err)
 	return err
 }
 func (l *LinkSrv) GetLongUrl(alias string) (string, error) {
 	var longUrl string
-	err := l.Get(&longUrl, sq.Select("long").From("links").Where(sq.Eq{"alias": alias}))
+	err := l.Get(&longUrl, sq.Select("url").From("links").Where(sq.Eq{"alias": alias}))
 	if err != nil {
 		l.Log().Error(err)
 		return "", err
@@ -35,7 +35,7 @@ func (l *LinkSrv) GetLongUrl(alias string) (string, error) {
 }
 func (l *LinkSrv) GetShortUrl(longUrl string) (string, error) {
 	var alias string
-	err := l.Get(&alias, sq.Select("alias").From("links").Where(sq.Eq{"long": longUrl}))
+	err := l.Get(&alias, sq.Select("alias").From("links").Where(sq.Eq{"url": longUrl}))
 	if err != nil {
 		l.Log().Error(err)
 		return "", err

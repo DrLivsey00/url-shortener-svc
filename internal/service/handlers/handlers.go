@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"github.com/DrLivsey00/url-shortener-svc/internal/config"
 	"github.com/DrLivsey00/url-shortener-svc/internal/service/requests"
 	"github.com/DrLivsey00/url-shortener-svc/internal/service/service"
@@ -48,6 +49,10 @@ func (h *Handlers) ShortenHandler(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) RedirectHandler(w http.ResponseWriter, r *http.Request) {
 	alias, err := requests.ParseAlias(r)
+	if alias == "" {
+		ape.RenderErr(w, problems.BadRequest(errors.New("alias can`t be empty"))...)
+		return
+	}
 	if err != nil {
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		h.cfg.Log().Error(err)

@@ -18,13 +18,11 @@ func Run(args []string) bool {
 			log.WithRecover(rvr).Error("app panicked")
 		}
 	}()
-
 	cfg := config.New(kv.MustFromEnv())
-	db := db2.NewDBConn(cfg)
-	repo := db2.NewRepo(db)
-	srv := service2.NewService(repo)
-
 	log = cfg.Log()
+	db := db2.NewDBConn(cfg)
+	repo := db2.NewRepo(db, cfg)
+	srv := service2.NewService(repo)
 
 	app := kingpin.New("url-shortener-svc", "")
 

@@ -49,7 +49,7 @@ func (s *LinkSrv) GetLongUrl(alias string) (string, error) {
 }
 
 func (s *LinkSrv) Save(alias, longUrl string) error {
-	err := s.repo.AddToDb(alias, longUrl)
+	err := s.repo.AddToDb(longUrl, alias)
 	if err != nil {
 		return errors.New("error saving url")
 	}

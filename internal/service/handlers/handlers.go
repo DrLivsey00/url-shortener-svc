@@ -55,5 +55,5 @@ func (h *Handlers) RedirectHandler(w http.ResponseWriter, r *http.Request) {
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}
-	http.Redirect(w, r, url, http.StatusMovedPermanently)
+	ape.Render(w, resources.LinkResponse{Url: url})
 }

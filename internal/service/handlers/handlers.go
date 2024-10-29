@@ -31,7 +31,6 @@ func (h *Handlers) ShortenHandler(w http.ResponseWriter, r *http.Request) {
 	alias, err := h.srv.Shorten(url)
 	if err != nil {
 		ape.RenderErr(w, problems.InternalError())
-
 		return
 	}
 	err = h.srv.Save(alias, url)

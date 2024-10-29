@@ -32,7 +32,7 @@ services:
   nginx:
     image: nginx:latest
     volumes:
-      - ./nginx.conf:/usr/local/bin/config/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - "80:80"
     depends_on:

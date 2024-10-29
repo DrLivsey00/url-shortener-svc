@@ -13,7 +13,7 @@ FROM alpine:3.9
 
 COPY --from=buildbase /usr/local/bin/url-shortener-svc /usr/local/bin/url-shortener-svc
 COPY config.yaml /usr/local/bin/config/config.yaml
-COPY nginx.conf /usr/local/bin/config/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY entry.sh /usr/local/bin/entrypoint.sh
 
 RUN chmod +x /usr/local/bin/entrypoint.sh

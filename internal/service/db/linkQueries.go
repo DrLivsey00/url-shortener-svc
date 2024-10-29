@@ -18,9 +18,10 @@ func NewLinkSrv(db *pgdb.DB, logger comfig.Logger) *LinkSrv {
 }
 
 func (l *LinkSrv) AddToDb(longUrl, alias string) error {
-	err := l.Exec(sq.Insert("links").
+	res, err := l.ExecWithResult(sq.Insert("links").
 		Columns("url", "alias").
 		Values(longUrl, alias))
+	l.Log().Info(res)
 	l.Log().Error(err)
 	return err
 }

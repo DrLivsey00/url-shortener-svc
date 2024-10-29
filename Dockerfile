@@ -14,7 +14,12 @@ FROM alpine:3.9
 COPY --from=buildbase /usr/local/bin/url-shortener-svc /usr/local/bin/url-shortener-svc
 COPY config.yaml /usr/local/bin/config/config.yaml
 COPY nginx.conf /usr/local/bin/config/nginx.conf
+COPY entry.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
 RUN apk add --no-cache ca-certificates
 
-ENTRYPOINT ["/usr/local/bin/url-shortener-svc", "run", "service"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+
 

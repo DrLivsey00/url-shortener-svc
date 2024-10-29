@@ -1,6 +1,6 @@
 -- +migrate Up
 create table links (
-    id integer primary key autoincrement,
+    id serial primary key,
     alias text not null unique,
     url text not null
 );

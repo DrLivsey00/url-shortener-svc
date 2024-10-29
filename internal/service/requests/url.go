@@ -2,6 +2,7 @@ package requests
 
 import (
 	"errors"
+	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"net/http"
 	"net/url"
@@ -31,6 +32,6 @@ func ParseUrl(req *http.Request) (string, error) {
 }
 
 func ParseAlias(req *http.Request) (string, error) {
-	alias := req.URL.Query().Get("alias")
+	alias := chi.URLParam(req, "alias")
 	return alias, nil
 }

@@ -6,14 +6,14 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      - KV_VIPER_FILE=./config/config.yaml
+      - KV_VIPER_FILE=./config/config.local.yaml
     ports:
       - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - ./config.yaml:/config/config.yaml
+      - ./config.local.yaml:/config/config.local.yaml
   db:
     image: postgres:14
     environment:

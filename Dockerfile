@@ -12,7 +12,7 @@ RUN GOOS=linux go build  -o /usr/local/bin/url-shortener-svc /go/src/github.com/
 FROM alpine:3.9
 
 COPY --from=buildbase /usr/local/bin/url-shortener-svc /usr/local/bin/url-shortener-svc
-COPY config.yaml /usr/local/bin/config/config.yaml
+COPY config.local.yaml /usr/local/bin/config/config.local.yaml
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY entry.sh /usr/local/bin/entrypoint.sh
 

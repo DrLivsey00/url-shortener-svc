@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/DrLivsey00/url-shortener-svc/internal/service/requests"
 	"github.com/DrLivsey00/url-shortener-svc/resources"
+	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
 )
@@ -16,7 +16,9 @@ func GetOriginalUrl(w http.ResponseWriter, r *http.Request) {
 
 	alias, err := requests.ParseAlias(r)
 	if alias == "" {
-		ape.RenderErr(w, problems.BadRequest(errors.New("alias can`t be empty"))...)
+		ape.RenderErr(w, problems.BadRequest(validation.Errors{
+			"data": err,
+		})...)
 		logger.Errorf("error: %s", err.Error())
 		return
 	}

@@ -16,6 +16,8 @@ type service struct {
 	log      *logan.Entry
 	copus    types.Copus
 	listener net.Listener
+	srv      *service2.Service
+	cfg      config.Config
 }
 
 func (s *service) run() error {
@@ -34,6 +36,8 @@ func newService(srv *service2.Service, cfg config.Config) *service {
 		log:      cfg.Log(),
 		copus:    cfg.Copus(),
 		listener: cfg.Listener(),
+		srv:      srv,
+		cfg:      cfg,
 	}
 }
 

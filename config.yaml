@@ -3,8 +3,7 @@ log:
   disable_sentry: true
 
 db:
-  url:  "postgres://postgres:postgres@db:5432/url_shortener?sslmode=disable"
-
+  url: db_url
 listener:
   addr: :8000
 
@@ -14,3 +13,6 @@ cop:
   upstream: "http://..."
   service_name: url-shortener-svc
   service_port: 80
+
+custom:
+  domain_name: "http://example.com"

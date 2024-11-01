@@ -20,8 +20,7 @@ func Run(args []string) bool {
 	}()
 	cfg := config.New(kv.MustFromEnv())
 	log = cfg.Log()
-	db := db2.NewDBConn(cfg)
-	repo := db2.NewRepo(db, cfg)
+	repo := db2.NewRepo(cfg)
 	srv := service2.NewService(repo)
 
 	app := kingpin.New("url-shortener-svc", "")

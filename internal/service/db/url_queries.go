@@ -1,25 +1,23 @@
 package db
 
 import (
+	"github.com/DrLivsey00/url-shortener-svc/internal/config"
 	sq "github.com/Masterminds/squirrel"
-	"gitlab.com/distributed_lab/kit/comfig"
-	"gitlab.com/distributed_lab/kit/pgdb"
 )
 
 type LinkSrv struct {
-	*pgdb.DB
-	comfig.Logger
+	config.Config
 }
 
-func NewLinkSrv(db *pgdb.DB, logger comfig.Logger) *LinkSrv {
-	return &LinkSrv{db,
-		logger,
+func NewLinkSrv(cfg config.Config) *LinkSrv {
+	return &LinkSrv{
+		cfg,
 	}
 }
 
 func (l *LinkSrv) AddToDb(longUrl, alias string) error {
 	l.Log().Infof("Incoming params - longUrl: %s, alias: %s", longUrl, alias)
-	res, err := l.ExecWithResult(sq.Insert("links").
+	res, err := l.DB().ExecWithResult(sq.Insert("links").
 		Columns("url", "alias").
 		Values(longUrl, alias))
 	l.Log().Infof("Result: %v", res)
@@ -29,7 +27,7 @@ func (l *LinkSrv) AddToDb(longUrl, alias string) error {
 func (l *LinkSrv) GetLongUrl(alias string) (string, error) {
 	var longUrl string
 	l.Log().Infof("Incoming params - alias: %s", alias)
-	err := l.Get(&longUrl, sq.Select("url").From("links").Where(sq.Eq{"alias": alias}))
+	err := l.DB().Get(&longUrl, sq.Select("url").From("links").Where(sq.Eq{"alias": alias}))
 	if err != nil {
 		l.Log().Error(err)
 		return "", err
@@ -39,7 +37,7 @@ func (l *LinkSrv) GetLongUrl(alias string) (string, error) {
 func (l *LinkSrv) GetShortUrl(longUrl string) (string, error) {
 	var alias string
 	l.Log().Infof("Incoming params - longUrl: %s", longUrl)
-	err := l.Get(&alias, sq.Select("alias").From("links").Where(sq.Eq{"url": longUrl}))
+	err := l.DB().Get(&alias, sq.Select("alias").From("links").Where(sq.Eq{"url": longUrl}))
 	if err != nil {
 		l.Log().Error(err)
 		return "", err

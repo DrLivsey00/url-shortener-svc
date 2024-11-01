@@ -1,10 +1,10 @@
 package service
 
 import (
-	"github.com/DrLivsey00/url-shortener-svc/internal/service/handlers"
-	service2 "github.com/DrLivsey00/url-shortener-svc/internal/service/service"
 	"net"
 	"net/http"
+
+	service2 "github.com/DrLivsey00/url-shortener-svc/internal/service/service"
 
 	"github.com/DrLivsey00/url-shortener-svc/internal/config"
 	"gitlab.com/distributed_lab/kit/copus/types"
@@ -16,7 +16,6 @@ type service struct {
 	log      *logan.Entry
 	copus    types.Copus
 	listener net.Listener
-	handlers *handlers.Handlers
 }
 
 func (s *service) run() error {
@@ -35,7 +34,6 @@ func newService(srv *service2.Service, cfg config.Config) *service {
 		log:      cfg.Log(),
 		copus:    cfg.Copus(),
 		listener: cfg.Listener(),
-		handlers: handlers.NewHandlers(srv, cfg),
 	}
 }
 

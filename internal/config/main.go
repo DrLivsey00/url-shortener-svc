@@ -13,7 +13,7 @@ type Config interface {
 	pgdb.Databaser
 	types.Copuser
 	comfig.Listenerer
-	GetDBURL() string
+	Customer
 }
 
 type config struct {
@@ -22,6 +22,7 @@ type config struct {
 	types.Copuser
 	comfig.Listenerer
 	getter kv.Getter
+	Customer
 }
 
 func New(getter kv.Getter) Config {
@@ -31,17 +32,6 @@ func New(getter kv.Getter) Config {
 		Copuser:    copus.NewCopuser(getter),
 		Listenerer: comfig.NewListenerer(getter),
 		Logger:     comfig.NewLogger(getter, comfig.LoggerOpts{}),
+		Customer:   NewCustomer(getter),
 	}
-}
-
-func (c *config) GetDBURL() string {
-	dbConfig, err := c.getter.GetStringMap("db")
-	if err != nil {
-		panic(err)
-	}
-	url, ok := dbConfig["url"].(string)
-	if !ok || url == "" {
-		panic("db_url not found or is not a string in configuration")
-	}
-	return url
 }

@@ -1,7 +1,7 @@
 package db
 
 import (
-	"gitlab.com/distributed_lab/kit/comfig"
+	"github.com/DrLivsey00/url-shortener-svc/internal/config"
 )
 
 type LinkService interface {
@@ -14,8 +14,8 @@ type Repository struct {
 	LinkService
 }
 
-func NewRepo(db *Db, logger comfig.Logger) *Repository {
+func NewRepo(cfg config.Config) *Repository {
 	return &Repository{
-		LinkService: NewLinkSrv(db.DB, logger),
+		LinkService: NewLinkSrv(cfg),
 	}
 }

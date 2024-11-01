@@ -35,7 +35,7 @@ func GetShortUrl(w http.ResponseWriter, r *http.Request) {
 		logger.Errorf("error: %s", err.Error())
 		return
 	}
-	url = fmt.Sprintf("http://%s/integrations/url-shortener-svc/%s", config.Custom().DomainName, alias) + alias
+	url = fmt.Sprintf("%s/integrations/url-shortener-svc/%s", config.Custom().DomainName, alias) + alias
 
 	ape.Render(w, resources.LinkResponse{Url: url})
 
